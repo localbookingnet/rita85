@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOUND SAFARI SHOWDOWN!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One:wght@400&family=Open+Sans:wght@400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: 
+                linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(210, 180, 140, 0.3), rgba(222, 184, 135, 0.3)),
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23FFA500;stop-opacity:1" /><stop offset="30%" style="stop-color:%23FFD700;stop-opacity:1" /><stop offset="70%" style="stop-color:%23F0E68C;stop-opacity:1" /><stop offset="100%" style="stop-color:%23DEB887;stop-opacity:1" /></linearGradient><linearGradient id="ground" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23DEB887;stop-opacity:1" /><stop offset="100%" style="stop-color:%23D2B48C;stop-opacity:1" /></linearGradient></defs><rect width="1400" height="900" fill="url(%23sky)"/><ellipse cx="700" cy="700" rx="600" ry="150" fill="url(%23ground)"/><rect x="0" y="600" width="1400" height="300" fill="url(%23ground)"/><ellipse cx="200" cy="450" rx="80" ry="120" fill="%23654321"/><ellipse cx="180" cy="420" rx="60" ry="80" fill="%23228B22"/><ellipse cx="1200" cy="480" rx="100" ry="140" fill="%23654321"/><ellipse cx="1180" cy="450" rx="80" ry="100" fill="%23228B22"/><ellipse cx="600" cy="470" rx="70" ry="100" fill="%23654321"/><ellipse cx="580" cy="440" rx="50" ry="70" fill="%23228B22"/><path d="M300 650 Q350 620 400 650 Q450 680 500 650 Q550 620 600 650" stroke="%23DAA520" stroke-width="3" fill="none"/><path d="M800 680 Q850 650 900 680 Q950 710 1000 680 Q1050 650 1100 680" stroke="%23DAA520" stroke-width="3" fill="none"/><circle cx="150" cy="150" r="40" fill="%23FFF8DC" opacity="0.8"/><circle cx="1250" cy="200" r="25" fill="%23FFF8DC" opacity="0.6"/><polygon points="50,500 80,480 110,500 80,520" fill="%23654321"/><polygon points="1300,520 1330,500 1360,520 1330,540" fill="%23654321"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2F2F2F;
+        }
+        
+        .container {
+            max-width: 600px;
+            width: 90%;
+            background: rgba(250, 245, 230, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.3);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            border: 2px solid rgba(160, 82, 45, 0.2);
+        }
+        
+        .container::before {
+            display: none;
+        }
+        
+        @keyframes safari-stripes {
+            0% { transform: translateX(-100px) translateY(-100px); }
+            100% { transform: translateX(100px) translateY(100px); }
+        }
+        
+        .title {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #654321;
+            text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.3);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #8B4513;
+            margin-bottom: 35px;
+            font-weight: 600;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .instructions {
+            background: linear-gradient(145deg, #F5F5DC, #FAF0E6);
+            border: 2px solid #D2B48C;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 30px;
+            font-size: 1rem;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+            color: #654321;
+        }
+        
+        .warning {
+            background: linear-gradient(145deg, #DEB887, #D2B48C);
+            border: 2px solid #A0522D;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            color: #654321;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .game-area {
+            position: relative;
+            z-index: 2;
+            display: none;
+        }
+        
+        .animal-image {
+            width: 300px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 3px solid #A0522D;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 20px rgba(139, 69, 19, 0.25);
+        }
+        
+        .timer {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #A0522D;
+            text-shadow: 1px 1px 3px rgba(139, 69, 19, 0.3);
+            margin-bottom: 25px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        .timer.urgent {
+            animation: urgentPulse 0.8s ease-in-out infinite;
+            color: #8B4513;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+        
+        @keyframes urgentPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        .btn-start {
+            background: linear-gradient(145deg, #A0522D, #8B4513);
+            color: white;
+            font-size: 1.3rem;
+            padding: 18px 35px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+        }
+        
+        .btn-start:hover {
+            background: linear-gradient(145deg, #8B4513, #654321);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(139, 69, 19, 0.4);
+        }
+        
+        .btn-got-it {
+            background: linear-gradient(145deg, #CD853F, #A0522D);
+            color: white;
+            border: none;
+            box-shadow: 0 3px 8px rgba(139, 69, 19, 0.25);
+        }
+        
+        .btn-got-it:hover {
+            background: linear-gradient(145deg, #A0522D, #8B4513);
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(139, 69, 19, 0.35);
+        }
+        
+        .btn-play-sound {
+            background: linear-gradient(145deg, #DEB887, #CD853F);
+            color: #654321;
+            border: 1px solid #A0522D;
+            font-weight: 600;
+            box-shadow: 0 3px 8px rgba(139, 69, 19, 0.2);
+        }
+        
+        .btn-play-sound:hover {
+            background: linear-gradient(145deg, #CD853F, #A0522D);
+            color: white;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 12px rgba(139, 69, 19, 0.3);
+        }
+        
+        .score {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #654321;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .animal-name {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: #8B4513;
+            margin-top: 20px;
+        }
+        
+        .final-score {
+            background: linear-gradient(145deg, #F5F5DC, #FAF0E6);
+            border: 2px solid #A0522D;
+            border-radius: 8px;
+            padding: 35px;
+            margin-top: 25px;
+            display: none;
+            position: relative;
+            z-index: 2;
+            color: #654321;
+        }
+        
+        .celebration {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 480px) {
+            .title { font-size: 2rem; }
+            .animal-image { width: 250px; height: 250px; }
+            .timer { font-size: 3rem; }
+            .buttons { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">SOUND SAFARI SHOWDOWN</h1>
+        <p class="subtitle">Happy 85th Birthday Rita!</p>
+        
+        <!-- QR Code Section -->
+        <div class="qr-code-section" style="margin: 20px 0;">
+            <div class="qr-placeholder" style="width: 120px; height: 120px; margin: 0 auto; background: #F5F5DC; border: 2px solid #A0522D; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #654321; text-align: center; line-height: 1.3;">
+                QR CODE<br>PLACEHOLDER<br><small>(Replace with actual QR code image)</small>
+            </div>
+            <p style="font-size: 0.9rem; color: #8B4513; margin-top: 8px;">Scan to share the game!</p>
+        </div>
+        
+        <div id="welcome-screen">
+            <div class="warning">
+                WARNING: This game may cause uncontrollable roaring, panic sweating, and the sudden urge to book a safari!
+            </div>
+            
+            <div class="instructions">
+                <h3>MISSION: SURVIVE THE SOUND SAFARI!</h3>
+                <p><strong>THE RULES:</strong></p>
+                <ul style="text-align: left; margin: 15px 0;">
+                    <li>An East African animal appears as a picture</li>
+                    <li>You have 10 SECONDS to guess and make the sound!</li>
+                    <li>After 10 seconds, you'll hear the REAL animal sound</li>
+                    <li>Hit "GOT IT!" if you nail the sound</li>
+                    <li>Timer gets FASTER as you survive longer!</li>
+                </ul>
+            </div>
+            
+            <button class="btn btn-start" onclick="startGame()">
+                BEGIN
+            </button>
+        </div>
+        
+        <div id="game-area" class="game-area">
+            <div class="score">Score: <span id="score">0</span>/10 | Round: <span id="round">1</span></div>
+            
+            <div class="timer" id="timer">10</div>
+            
+            <img id="animal-image" class="animal-image" src="" alt="Mystery Animal">
+            
+            <div class="buttons">
+                <button class="btn btn-play-sound" onclick="playAnimalSound()">🔊 Replay Sound</button>
+                <button class="btn btn-got-it" onclick="gotIt()">✅ GOT IT!</button>
+            </div>
+            
+            <div id="reveal" style="display: none;">
+                <div class="animal-name" id="animal-name"></div>
+                <p>Listen to the real sound:</p>
+                <button class="btn btn-play-sound" onclick="playCorrectSound()">🎵 Real Sound</button>
+            </div>
+        </div>
+        
+        <div id="final-screen" class="final-score">
+            <div class="celebration" id="celebration"></div>
+            <h2>SAFARI COMPLETE!</h2>
+            <p>Final Score: <span id="final-score"></span>/10</p>
+            <p id="score-message"></p>
+            <button class="btn btn-start" onclick="resetGame()" style="margin-top: 20px;">
+                🔄 SURVIVE ANOTHER SAFARI!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const animals = [
+            {
+                name: "African Lion",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23F4A460'/%3E%3C!-- Lion body --%3E%3Cellipse cx='150' cy='180' rx='80' ry='50' fill='%23CD853F'/%3E%3C!-- Lion head --%3E%3Ccircle cx='150' cy='120' r='60' fill='%23DEB887'/%3E%3C!-- Mane --%3E%3Cpath d='M90 120 Q80 80 120 85 Q150 70 180 85 Q220 80 210 120 Q220 160 180 155 Q150 170 120 155 Q80 160 90 120 Z' fill='%238B4513'/%3E%3C!-- Face features --%3E%3Ccircle cx='135' cy='110' r='4' fill='%23000'/%3E%3Ccircle cx='165' cy='110' r='4' fill='%23000'/%3E%3Ctriangle points='150,120 145,130 155,130' fill='%23000'/%3E%3Cpath d='M140 135 Q150 145 160 135' stroke='%23000' stroke-width='3' fill='none'/%3E%3C!-- Legs --%3E%3Crect x='120' y='220' width='15' height='40' fill='%23CD853F'/%3E%3Crect x='165' y='220' width='15' height='40' fill='%23CD853F'/%3E%3Ctext x='150' y='290' text-anchor='middle' font-size='14' font-weight='bold' fill='%23654321'%3EAfrican Lion%3C/text%3E%3C/svg%3E",
+                sound: "roar"
+            },
+            {
+                name: "African Elephant",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23DEB887'/%3E%3C!-- Elephant body --%3E%3Cellipse cx='150' cy='200' rx='90' ry='60' fill='%23696969'/%3E%3C!-- Elephant head --%3E%3Cellipse cx='150' cy='120' rx='70' ry='50' fill='%23708090'/%3E%3C!-- Ears --%3E%3Cellipse cx='100' cy='110' rx='25' ry='40' fill='%23696969' transform='rotate(-20 100 110)'/%3E%3Cellipse cx='200' cy='110' rx='25' ry='40' fill='%23696969' transform='rotate(20 200 110)'/%3E%3C!-- Trunk --%3E%3Cpath d='M150 150 Q130 170 120 190 Q110 210 115 230 Q120 250 130 260' stroke='%23708090' stroke-width='20' fill='none' stroke-linecap='round'/%3E%3C!-- Eyes --%3E%3Ccircle cx='135' cy='110' r='4' fill='%23000'/%3E%3Ccircle cx='165' cy='110' r='4' fill='%23000'/%3E%3C!-- Tusks --%3E%3Cpath d='M130 140 L125 160' stroke='%23FFF8DC' stroke-width='4'/%3E%3Cpath d='M170 140 L175 160' stroke='%23FFF8DC' stroke-width='4'/%3E%3C!-- Legs --%3E%3Crect x='110' y='240' width='20' height='35' fill='%23696969'/%3E%3Crect x='140' y='245' width='20' height='30' fill='%23696969'/%3E%3Crect x='170' y='240' width='20' height='35' fill='%23696969'/%3E%3Ctext x='150' y='290' text-anchor='middle' font-size='14' font-weight='bold' fill='%23654321'%3EAfrican Elephant%3C/text%3E%3C/svg%3E",
+                sound: "trumpet"
+            },
+            {
+                name: "Spotted Hyena",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23F0E68C'/%3E%3C!-- Hyena body --%3E%3Cellipse cx='150' cy='180' rx='70' ry='40' fill='%23D2691E'/%3E%3C!-- Hyena head --%3E%3Cellipse cx='150' cy='130' rx='45' ry='35' fill='%23DEB887'/%3E%3C!-- Spots --%3E%3Ccircle cx='130' cy='170' r='5' fill='%23654321'/%3E%3Ccircle cx='160' cy='165' r='4' fill='%23654321'/%3E%3Ccircle cx='140' cy='190' r='3' fill='%23654321'/%3E%3Ccircle cx='175' cy='185' r='4' fill='%23654321'/%3E%3C!-- Face features --%3E%3Ccircle cx='140' cy='125' r='3' fill='%23000'/%3E%3Ccircle cx='160' cy='125' r='3' fill='%23000'/%3E%3Ctriangle points='150,135 147,140 153,140' fill='%23000'/%3E%3Cpath d='M140 145 Q150 155 160 145' stroke='%23000' stroke-width='2' fill='none'/%3E%3C!-- Ears --%3E%3Cellipse cx='135' cy='115' rx='8' ry='12' fill='%23D2691E'/%3E%3Cellipse cx='165' cy='115' rx='8' ry='12' fill='%23D2691E'/%3E%3C!-- Legs --%3E%3Crect x='125' y='210' width='12' height='35' fill='%23D2691E'/%3E%3Crect x='163' y='210' width='12' height='35' fill='%23D2691E'/%3E%3Ctext x='150' y='290' text-anchor='middle' font-size='14' font-weight='bold' fill='%23654321'%3ESpotted Hyena%3C/text%3E%3C/svg%3E",
+                sound: "laugh"
+            },
+            {
+                name: "Chimpanzee",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23228B22'/%3E%3C!-- Chimp body --%3E%3Cellipse cx='150' cy='190' rx='60' ry='45' fill='%23654321'/%3E%3C!-- Chimp head --%3E%3Ccircle cx='150' cy='130' r='50' fill='%238B4513'/%3E%3C!-- Face --%3E%3Cellipse cx='150' cy='140' rx='30' ry='25' fill='%23D2B48C'/%3E%3C!-- Eyes --%3E%3Ccircle cx='140' cy='130' r='5' fill='%23000'/%3E%3Ccircle cx='160' cy='130' r='5' fill='%23000'/%3E%3C!-- Nose --%3E%3Cellipse cx='150' cy='140' rx='3' ry='2' fill='%23000'/%3E%3C!-- Mouth --%3E%3Cpath d='M145 150 Q150 155 155 150' stroke='%23000' stroke-width='2' fill='none'/%3E%3C!-- Ears --%3E%3Ccircle cx='115' cy='120' r='15' fill='%23D2B48C'/%3E%3Ccircle cx='185' cy='120' r='15' fill='%23D2B48C'/%3E%3C!-- Arms --%3E%3Cellipse cx='105' cy='180' rx='15' ry='40' fill='%23654321' transform='rotate(-30 105 180)'/%3E%3Cellipse cx='195' cy='180' rx='15' ry='40' fill='%23654321' transform='rotate(30 195 180)'/%3E%3Ctext x='150' y='290' text-anchor='middle' font-size='14' font-weight='bold' fill='%23654321'%3EChimpanzee%3C/text%3E%3C/svg%3E",
+                sound: "chatter"
+            },
+            {
+                name: "Hippopotamus",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%236495ED'/%3E%3C!-- Water --%3E%3Crect x='0' y='220' width='300' height='80' fill='%234682B4'/%3E%3Cpath d='M0 220 Q75 210 150 220 Q225 230 300 220 L300 300 L0 300 Z' fill='%234169E1'/%3E%3C!-- Hippo body (mostly underwater) --%3E%3Cellipse cx='150' cy='240' rx='80' ry='30' fill='%23696969'/%3E%3C!-- Hippo head --%3E%3Cellipse cx='150' cy='180' rx='60' ry='40' fill='%23708090'/%3E%3C!-- Eyes on top --%3E%3Ccircle cx='135' cy='160' r='6' fill='%23000'/%3E%3Ccircle cx='165' cy='160' r='6' fill='%23000'/%3E%3C!-- Nostrils --%3E%3Cellipse cx='145' cy='170' rx='3' ry='2' fill='%23000'/%3E%3Cellipse cx='155' cy='170' rx='3' ry='2' fill='%23000'/%3E%3C!-- Mouth --%3E%3Crect x='135' y='190' width='30' height='15' fill='%23000' rx='7'/%3E%3C!-- Ears --%3E%3Cellipse cx='120' cy='155' rx='8' ry='12' fill='%23696969'/%3E%3Cellipse cx='180' cy='155' rx='8' ry='12' fill='%23696969'/%3E%3Ctext x='150' y='290' text-anchor='middle' font-size='14' font-weight='bold' fill='%23FFF'%3EHippopotamus%3C/text%3E%3C/svg%3E",
+                sound: "grunt"
+            },
+            {
+                name: "Plains Zebra",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23DAA520'/%3E%3C!-- Zebra body --%3E%3Cellipse cx='150' cy='180' rx='70' ry='45' fill='%23FFF'/%3E%3C!-- Zebra head --%3E%3Cellipse cx='150' cy='120' rx='40' ry='35' fill='%23FFF'/%3E%3C!-- Stripes on body --%3E%3Cpath d='M90 160 L210 160 M95 170 L205 170 M90 180 L210 180 M95 190 L205 190 M100 200 L200 200' stroke='%23000' stroke-width='8'/%3E%3C!-- Stripes on head --%3E%3Cpath d='M120 100 L180 100 M115 110 L185 110 M120 120 L180 120 M115 130 L185 130 M120 140 L180 140' stroke='%23000' stroke-width='6'/%3E%3C!-- Eyes --%3E%3Ccircle cx='140' cy='115' r='4' fill='%23000'/%3E%3Ccircle cx='160' cy='115' r='4' fill='%23000'/%3E%3C!-- Nose --%3E%3Cellipse cx='150' cy='125' rx='4' ry='3' fill='%23000'/%3E%3C!-- Mane --%3E%3Cpath d='M150 90 L150 110' stroke='%23000' stroke-width='6'/%3E%3Cpath d='M145 85 L145 105 M155 85 L155 105' stroke='%23000' stroke-width='4'/%3E%3C!-- Legs --%3E%3Crect x='120' y='220' width='12' height='35' fill='%23FFF'/%3E%3Crect x='168' y='220' width='12' height='35' fill='%23FFF'/%3E%3Cpath d='M120 220 L132 255 M168 220 L180 255' stroke='%23000' stroke-width='3'/%3E%3Ctext x='150' y='290' text-anchor='middle' font-size='14' font-weight='bold' fill='%23654321'%3EPlains Zebra%3C/text%3E%3C/svg%3E",
+                sound: "neigh"
+            },
+            {
+                name: "Cheetah",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23F4A460'/%3E%3C!-- Cheetah body --%3E%3Cellipse cx='150' cy='180' rx='75' ry='40' fill='%23DAA520'/%3E%3C!-- Cheetah head --%3E%3Ccircle cx='150' cy='120' r='45' fill='%23DEB887'/%3E%3C!-- Spots pattern --%3E%3Ccircle cx='130' cy='160' r='4' fill='%23000'/%3E%3Ccircle cx='160' cy='165' r='3' fill='%23000'/%3E%3Ccircle cx='140' cy='180' r='3' fill='%23000'/%3E%3Ccircle cx='170' cy='175' r='4' fill='%23000'/%3E%3Ccircle cx='125' cy='190' r='3' fill='%23000'/%3E%3Ccircle cx='175' cy='190' r='3' fill='%23000'/%3E%3C!-- Face spots --%3E%3Ccircle cx='125' cy='115' r='2' fill='%23000'/%3E%3Ccircle cx='175' cy='115' r='2' fill='%23000'/%3E%3C!-- Tear marks --%3E%3Cpath d='M140 115 L135 135' stroke='%23000' stroke-width='3'/%3E%3Cpath d='M160 115 L165 135' stroke='%23000' stroke-width='3'/%3E%3C!-- Eyes --%3E%3Ccircle cx='140' cy='115' r='4' fill='%23000'/%3E%3Ccircle cx='160' cy='115' r='4' fill='%23000'/%3E%3C!-- Nose --%3E%3Ctriangle points='150,125 147,130 153,130' fill='%23000'/%3E%3C!-- Legs --%3E%3Crect x='120' y='210' width='12' height='40' fill='%23DAA520'/%3E%3Crect x='168' y='210' width='12' height='40' fill='%23DAA520'/%3E%3Ctext x='150' y='290' text-anchor='middle' font-size='14' font-weight='bold' fill='%23654321'%3ECheetah%3C/text%3E%3C/svg%3E",
+                sound: "chirp"
+            },
+            {
+                name: "Baboon",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23DDA0DD'/%3E%3C!-- Baboon body --%3E%3Cellipse cx='150' cy='190' rx='55' ry='40' fill='%23A0522D'/%3E%3C!-- Baboon head --%3E%3Cellipse cx='150' cy='130' rx='40' ry='45' fill='%23D2691E'/%3E%3C!-- Snout --%3E%3Cellipse cx='150' cy='150' rx='20' ry='15' fill='%23CD853F'/%3E%3C!-- Eyes --%3E%3Ccircle cx='140' cy='120' r='5' fill='%23000'/%3E%3Ccircle cx='160' cy='120' r='5' fill='%23000'/%3E%3C!-- Nose --%3E%3Cellipse cx='150' cy='145' rx='3' ry='2' fill='%23000'/%3E%3C!-- Mouth --%3E%3Cpath d='M145 155 Q150 160 155 155' stroke='%23000' stroke-width='2' fill='none'/%3E%3C!-- Ears --%3E%3Ccircle cx='125' cy='115' r='12' fill='%23A0522D'/%3E%3Ccircle cx='175' cy='115' r='12' fill='%23A0522D'/%3E%3C!-- Arms --%3E%3Cellipse cx='110' cy='180' rx='12' ry='35' fill='%23A0522D' transform='rotate(-20 110 180)'/%3E%3Cellipse cx='190' cy='180' rx='12' ry='35' fill='%23A0522D' transform='rotate(20 190 180)'/%3E%3C!-- Tail --%3E%3Cpath d='M150 230 Q180 240 200 220' stroke='%23A0522D' stroke-width='8' fill='none'/%3E%3Ctext x='150' y='290' text-anchor='middle' font-size='14' font-weight='bold' fill='%23654321'%3EBaboon%3C/text%3E%3C/svg%3E",
+                sound: "bark"
+            },
+            {
+                name: "African Buffalo",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23CD853F'/%3E%3C!-- Buffalo body --%3E%3Cellipse cx='150' cy='190' rx='80' ry='50' fill='%232F4F4F'/%3E%3C!-- Buffalo head --%3E%3Cellipse cx='150' cy='130' rx='55' ry='45' fill='%23404040'/%3E%3C!-- Horns --%3E%3Cpath d='M125 100 Q110 85 105 70' stroke='%23000' stroke-width='8' fill='none'/%3E%3Cpath d='M175 100 Q190 85 195 70' stroke='%23000' stroke-width='8' fill='none'/%3E%3C!-- Horn connection --%3E%3Crect x='120' y='95' width='60' height='15' fill='%23000' rx='7'/%3E%3C!-- Eyes --%3E%3Ccircle cx='135' cy='125' r='4' fill='%23000'/%3E%3Ccircle cx='165' cy='125' r='4' fill='%23000'/%3E%3C!-- Nose --%3E%3Cellipse cx='150' cy='140' rx='8' ry='5' fill='%23000'/%3E%3C!-- Ears --%3E%3Cellipse cx='115' cy='115' rx='12' ry='18' fill='%23404040'/%3E%3Cellipse cx='185' cy='115' rx='12' ry='18' fill='%23404040'/%3E%3C!-- Legs --%3E%3Crect x='115' y='230' width='15' height='35' fill='%232F4F4F'/%3E%3Crect x='170' y='230' width='15' height='35' fill='%232F4F4F'/%3E%3Ctext x='150' y='290' text-anchor='middle' font-size='14' font-weight='bold' fill='%23654321'%3EAfrican Buffalo%3C/text%3E%3C/svg%3E",
+                sound: "snort"
+            },
+            {
+                name: "Giraffe",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23FFE4B5'/%3E%3C!-- Giraffe body --%3E%3Cellipse cx='150' cy='220' rx='35' ry='50' fill='%23DAA520'/%3E%3C!-- Long neck --%3E%3Crect x='140' y='80' width='20' height='140' fill='%23DAA520'/%3E%3C!-- Giraffe head --%3E%3Cellipse cx='150' cy='70' rx='18' ry='25' fill='%23DEB887'/%3E%3C!-- Pattern on body --%3E%3Cpath d='M130 200 L170 200 M125 210 L175 210 M130 230 L170 230 M135 240 L165 240' stroke='%23A0522D' stroke-width='3'/%3E%3C!-- Pattern on neck --%3E%3Cpath d='M135 100 L165 100 M138 120 L162 120 M135 140 L165 140 M138 160 L162 160 M135 180 L165 180' stroke='%23A0522D' stroke-width='2'/%3E%3C!-- Eyes --%3E%3Ccircle cx='145' cy='65' r='2' fill='%23000'/%3E%3Ccircle cx='155' cy='65' r='2' fill='%23000'/%3E%3C!-- Horns (ossicones) --%3E%3Crect x='147' y='50' width='2' height='15' fill='%23654321'/%3E%3Crect x='151' y='50' width='2' height='15' fill='%23654321'/%3E%3Ccircle cx='148' cy='50' r='2' fill='%23654321'/%3E%3Ccircle cx='152' cy='50' r='2' fill='%23654321'/%3E%3C!-- Legs --%3E%3Crect x='140' y='265' width='8' height='20' fill='%23DAA520'/%3E%3Crect x='152' y='265' width='8' height='20' fill='%23DAA520'/%3E%3Ctext x='150' y='295' text-anchor='middle' font-size='14' font-weight='bold' fill='%23654321'%3EGiraffe%3C/text%3E%3C/svg%3E",
+                sound: "hum"
+            }
+        ];text%3E%3C/svg%3E",
+                sound: "roar"
+            },
+            {
+                name: "African Elephant",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%2390EE90'/%3E%3Cellipse cx='150' cy='130' rx='60' ry='40' fill='%23696969'/%3E%3Cpath d='M120 160 Q100 180 110 200' stroke='%23696969' stroke-width='15' fill='none'/%3E%3Ccircle cx='135' cy='120' r='3' fill='%23000'/%3E%3Ccircle cx='165' cy='120' r='3' fill='%23000'/%3E%3Ctext x='150' y='250' text-anchor='middle' font-size='16' fill='%23654321'%3E🐘 TRUMPET!%3C/text%3E%3C/svg%3E",
+                sound: "trumpet"
+            },
+            {
+                name: "Spotted Hyena",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23deb887'/%3E%3Cellipse cx='150' cy='140' rx='50' ry='30' fill='%23d2691e'/%3E%3Ccircle cx='2' cy='2' r='2' fill='%23654321'/%3E%3Ccircle cx='135' cy='130' r='3' fill='%23000'/%3E%3Ccircle cx='165' cy='130' r='3' fill='%23000'/%3E%3Cpath d='M140 145 Q150 155 160 145' stroke='%23000' stroke-width='2' fill='none'/%3E%3Ctext x='150' y='250' text-anchor='middle' font-size='18' fill='%23654321'%3E🐕 LAUGH!%3C/text%3E%3C/svg%3E",
+                sound: "laugh"
+            },
+            {
+                name: "Chimpanzee",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23228B22'/%3E%3Ccircle cx='150' cy='130' r='45' fill='%23654321'/%3E%3Ccircle cx='135' cy='120' r='4' fill='%23000'/%3E%3Ccircle cx='165' cy='120' r='4' fill='%23000'/%3E%3Cellipse cx='150' cy='140' rx='15' ry='10' fill='%238b4513'/%3E%3Ctext x='150' y='250' text-anchor='middle' font-size='18' fill='%23654321'%3E🐵 OOH OOH!%3C/text%3E%3C/svg%3E",
+                sound: "chatter"
+            },
+            {
+                name: "Hippopotamus",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%236495ED'/%3E%3Cellipse cx='150' cy='160' rx='70' ry='40' fill='%23696969'/%3E%3Ccircle cx='130' cy='145' r='3' fill='%23000'/%3E%3Ccircle cx='170' cy='145' r='3' fill='%23000'/%3E%3Crect x='140' y='165' width='20' height='15' fill='%23000' rx='5'/%3E%3Ctext x='150' y='250' text-anchor='middle' font-size='18' fill='%23654321'%3E🦛 GRUNT!%3C/text%3E%3C/svg%3E",
+                sound: "grunt"
+            },
+            {
+                name: "Plains Zebra",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23F0E68C'/%3E%3Cellipse cx='150' cy='140' rx='45' ry='35' fill='%23fff'/%3E%3Cpath d='M120 120 L180 120 M115 135 L185 135 M120 150 L180 150 M125 165 L175 165' stroke='%23000' stroke-width='8'/%3E%3Ccircle cx='135' cy='125' r='3' fill='%23000'/%3E%3Ccircle cx='165' cy='125' r='3' fill='%23000'/%3E%3Ctext x='150' y='250' text-anchor='middle' font-size='18' fill='%23654321'%3E🦓 NEIGH!%3C/text%3E%3C/svg%3E",
+                sound: "neigh"
+            },
+            {
+                name: "Cheetah",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23F4A460'/%3E%3Cellipse cx='150' cy='130' rx='50' ry='35' fill='%23DAA520'/%3E%3Ccircle cx='2' cy='2' r='1' fill='%23000'/%3E%3Ccircle cx='135' cy='120' r='3' fill='%23000'/%3E%3Ccircle cx='165' cy='120' r='3' fill='%23000'/%3E%3Cpath d='M130 110 L140 100 M160 100 L170 110' stroke='%23000' stroke-width='2'/%3E%3Ctext x='150' y='250' text-anchor='middle' font-size='18' fill='%23654321'%3E🐆 PURR-CHIRP!%3C/text%3E%3C/svg%3E",
+                sound: "chirp"
+            },
+            {
+                name: "Baboon",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23DDA0DD'/%3E%3Cellipse cx='150' cy='140' rx='45' ry='40' fill='%23A0522D'/%3E%3Ccircle cx='135' cy='125' r='4' fill='%23000'/%3E%3Ccircle cx='165' cy='125' r='4' fill='%23000'/%3E%3Cellipse cx='150' cy='155' rx='20' ry='15' fill='%23CD853F'/%3E%3Ctext x='150' y='250' text-anchor='middle' font-size='16' fill='%23654321'%3E🐒 BARK-SCREAM!%3C/text%3E%3C/svg%3E",
+                sound: "bark"
+            },
+            {
+                name: "African Buffalo",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23CD853F'/%3E%3Cellipse cx='150' cy='140' rx='55' ry='40' fill='%232F4F4F'/%3E%3Cpath d='M120 110 Q105 100 110 90 M180 110 Q195 100 190 90' stroke='%23000' stroke-width='8' fill='none'/%3E%3Ccircle cx='135' cy='130' r='3' fill='%23000'/%3E%3Ccircle cx='165' cy='130' r='3' fill='%23000'/%3E%3Ctext x='150' y='250' text-anchor='middle' font-size='18' fill='%23654321'%3E🐃 SNORT!%3C/text%3E%3C/svg%3E",
+                sound: "snort"
+            },
+            {
+                name: "Giraffe",
+                image: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 300 300'%3E%3Crect width='300' height='300' fill='%23FFE4B5'/%3E%3Cellipse cx='150' cy='200' rx='25' ry='40' fill='%23DAA520'/%3E%3Crect x='140' y='80' width='20' height='120' fill='%23DAA520'/%3E%3Ccircle cx='150' cy='70' r='15' fill='%23DAA520'/%3E%3Ccircle cx='145' cy='65' r='2' fill='%23000'/%3E%3Ccircle cx='155' cy='65' r='2' fill='%23000'/%3E%3Ctext x='150' y='280' text-anchor='middle' font-size='14' fill='%23654321'%3E🦒 HUM...?%3C/text%3E%3C/svg%3E",
+                sound: "hum"
+            }
+        ];
+        
+        // Simple beep sound for demonstration (since we can't include real animal sounds in HTML)
+        function createBeepSound(frequency, duration) {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = frequency;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+        
+        // Game variables
+        let currentAnimal = 0;
+        let score = 0;
+        let timeLeft = 10;
+        let timer;
+        let gameTimer;
+        let baseTime = 10;
+        
+        function startGame() {
+            document.getElementById('welcome-screen').style.display = 'none';
+            document.getElementById('game-area').style.display = 'block';
+            currentAnimal = 0;
+            score = 0;
+            showNextAnimal();
+        }
+        
+        function showNextAnimal() {
+            if (currentAnimal >= animals.length) {
+                endGame();
+                return;
+            }
+            
+            // Calculate time for this round (gets faster)
+            baseTime = Math.max(5, 10 - Math.floor(currentAnimal / 2));
+            timeLeft = baseTime;
+            
+            document.getElementById('score').textContent = score;
+            document.getElementById('round').textContent = currentAnimal + 1;
+            document.getElementById('animal-image').src = animals[currentAnimal].image;
+            document.getElementById('reveal').style.display = 'none';
+            document.getElementById('timer').textContent = timeLeft;
+            document.getElementById('timer').className = 'timer';
+            
+            // Start countdown timer
+            gameTimer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('timer').textContent = timeLeft;
+                
+                if (timeLeft <= 2) {
+                    document.getElementById('timer').className = 'timer urgent';
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(gameTimer);
+                    // Play sound after timer ends
+                    playAnimalSound();
+                    showReveal();
+                }
+            }, 1000);
+        }
+        
+        function playAnimalSound() {
+            // Create different beep sounds for different animals (demonstration)
+            const soundMap = {
+                "roar": 150,      // Low growl
+                "trumpet": 300,   // Medium trumpet
+                "laugh": 400,     // High laugh
+                "chatter": 500,   // High chatter
+                "grunt": 100,     // Very low grunt
+                "neigh": 350,     // Horse-like
+                "chirp": 600,     // High chirp
+                "bark": 250,      // Dog-like
+                "snort": 120,     // Low snort
+                "hum": 200        // Low hum
+            };
+            
+            const frequency = soundMap[animals[currentAnimal].sound] || 300;
+            createBeepSound(frequency, 1);
+        }
+        
+        function playCorrectSound() {
+            playAnimalSound();
+        }
+        
+        function gotIt() {
+            if (gameTimer) {
+                clearInterval(gameTimer);
+                score++;
+                playAnimalSound();
+                showReveal();
+            }
+        }
+        
+        function showReveal() {
+            document.getElementById('reveal').style.display = 'block';
+            document.getElementById('animal-name').textContent = animals[currentAnimal].name;
+            setTimeout(() => {
+                currentAnimal++;
+                showNextAnimal();
+            }, 3000);
+        }
+        
+        function endGame() {
+            document.getElementById('game-area').style.display = 'none';
+            document.getElementById('final-screen').style.display = 'block';
+            document.getElementById('final-score').textContent = score;
+            
+            let message = '';
+            let celebration = '';
+            
+            if (score >= 8) {
+                celebration = '🎉🏆🎉';
+                message = 'Rita, you\'re an animal sound LEGEND!';
+            } else if (score >= 5) {
+                celebration = '🎊🎈🎊';
+                message = 'Great job! You know your safari sounds!';
+            } else {
+                celebration = '🎂🎉🎂';
+                message = 'What matters is you had fun on your special day!';
+            }
+            
+            document.getElementById('celebration').textContent = celebration;
+            document.getElementById('score-message').textContent = message;
+        }
+        
+        function resetGame() {
+            currentAnimal = 0;
+            score = 0;
+            timeLeft = baseTime;
+            if (gameTimer) clearInterval(gameTimer);
+            document.getElementById('final-screen').style.display = 'none';
+            document.getElementById('welcome-screen').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
