@@ -13,25 +13,25 @@
             box-sizing: border-box;
         }
         
-        body {
-            font-family: 'Open Sans', sans-serif;
-            background: 
-                linear-gradient(135deg, rgba(139, 69, 19, 0.3), rgba(210, 180, 140, 0.3), rgba(222, 184, 135, 0.3)),
-                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23FFA500;stop-opacity:1" /><stop offset="30%" style="stop-color:%23FFD700;stop-opacity:1" /><stop offset="70%" style="stop-color:%23F0E68C;stop-opacity:1" /><stop offset="100%" style="stop-color:%23DEB887;stop-opacity:1" /></linearGradient><linearGradient id="ground" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%23DEB887;stop-opacity:1" /><stop offset="100%" style="stop-color:%23D2B48C;stop-opacity:1" /></linearGradient></defs><rect width="1400" height="900" fill="url(%23sky)"/><ellipse cx="700" cy="700" rx="600" ry="150" fill="url(%23ground)"/><rect x="0" y="600" width="1400" height="300" fill="url(%23ground)"/><ellipse cx="200" cy="450" rx="80" ry="120" fill="%23654321"/><ellipse cx="180" cy="420" rx="60" ry="80" fill="%23228B22"/><ellipse cx="1200" cy="480" rx="100" ry="140" fill="%23654321"/><ellipse cx="1180" cy="450" rx="80" ry="100" fill="%23228B22"/><ellipse cx="600" cy="470" rx="70" ry="100" fill="%23654321"/><ellipse cx="580" cy="440" rx="50" ry="70" fill="%23228B22"/><path d="M300 650 Q350 620 400 650 Q450 680 500 650 Q550 620 600 650" stroke="%23DAA520" stroke-width="3" fill="none"/><path d="M800 680 Q850 650 900 680 Q950 710 1000 680 Q1050 650 1100 680" stroke="%23DAA520" stroke-width="3" fill="none"/><circle cx="150" cy="150" r="40" fill="%23FFF8DC" opacity="0.8"/><circle cx="1250" cy="200" r="25" fill="%23FFF8DC" opacity="0.6"/><polygon points="50,500 80,480 110,500 80,520" fill="%23654321"/><polygon points="1300,520 1330,500 1360,520 1330,540" fill="%23654321"/></svg>');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #2F2F2F;
-        }
+       body {
+    font-family: 'Open Sans', sans-serif;
+    background: 
+        linear-gradient(rgba(139, 69, 19, 0.25), rgba(210, 180, 140, 0.25)),
+        url('https://github.com/localbookingnet/rita85/blob/main/1894743_original.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #2F2F2F;
+}
         
         .container {
             max-width: 600px;
             width: 90%;
-            background: rgba(250, 245, 230, 0.95);
+            background: rgba(260, 245, 230, 0.95);
             border-radius: 12px;
             box-shadow: 0 15px 35px rgba(139, 69, 19, 0.3);
             padding: 40px;
